@@ -27,10 +27,10 @@
     (with-dynamodb-client [_ (qp.store/database)]
       (qp query))))
 
-(defmethod driver/describe-table :dynamodb [_ database {table-name :name}]
+(defmethod driver/describe-table :dynamodb [_ database table-name]
   (with-dynamodb-client [_ database]
     {:schema nil
-     :name   table-name
+     :name   (:name table-name)
      :fields (set (qp/describe-table table-name))}))
 
 (defmethod driver/mbql->native :dynamodb [_ query]
